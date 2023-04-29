@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    --color-primary: #FE8A00;
+    --color-white: #FFFFFF;
+    --color-gray: #CFCFCF;
+    --color-background: #151F2B;
+    --color-surface: #1E2733;
+
+    --grid-token-xxs: 8px;
+    --grid-token-xs: 12px;
+    --grid-token-sm: 16px;
+    --grid-token-md: 20px;
+    --grid-token-lg: 24px;
+    --grid-token-xl: 32px;
+    --grid-token-xxl: 48px;
+
+    --border-radius: 4px;
+
+    font-family: 'Montserrat', sans-serif;
+}

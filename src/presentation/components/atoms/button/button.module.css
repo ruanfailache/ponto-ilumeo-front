@@ -1,0 +1,15 @@
+.button {
+    padding: var(--grid-token-xs);
+    outline: 0;
+    border: 0;
+    border-radius: var(--border-radius);
+    background-color: var(--color-primary);
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--color-background);
+    cursor: pointer;
+}
+
+.button:hover {
+    filter: brightness(110%);
+}

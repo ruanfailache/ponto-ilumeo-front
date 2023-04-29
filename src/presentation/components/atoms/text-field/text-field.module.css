@@ -1,0 +1,60 @@
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+    border-radius: var(--border-radius);
+    padding-left: var(--grid-token-xs);
+    padding-right: var(--grid-token-xs);
+    background-color: var(--color-surface);
+    box-sizing: border-box;
+}
+
+.input,
+.input::placeholder,
+.labelText {
+    color: var(--color-white);
+}
+
+.labelText {
+    font-size: 0.8em;
+    font-weight: 300;
+    padding: calc(1.25em / 2) 0;
+    animation: showLabel 100ms forwards ease;
+    overflow: hidden;
+}
+
+.hiddenLabelText {
+    animation: hideLabel 100ms forwards ease;
+}
+
+.input {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    font-size: 1.25em;
+    font-weight: 600;
+}
+
+@keyframes showLabel {
+    from {
+        height: 0;
+    }
+    to {
+        height: fit-content;
+    }
+}
+
+@keyframes hideLabel {
+    from {
+        height: fit-content;
+    }
+    to {
+        height: 0;
+        padding: 0;
+    }
+}
