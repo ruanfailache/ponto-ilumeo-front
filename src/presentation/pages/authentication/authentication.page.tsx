@@ -1,6 +1,12 @@
 import { FC } from "react";
 
-import { TextField, Button } from "../../components";
+import {
+    TextField,
+    Button,
+    Typography,
+    FontSize,
+    FontWeight,
+} from "../../components";
 
 import style from "./authentication.module.css";
 import { useAuthenticationPresenter } from "./authentication.presenter";
@@ -11,14 +17,19 @@ export const AuthenticationPage: FC = () => {
     return (
         <main className={style.page}>
             <form className={style.container}>
-                <h1 className={style.title}>
-                    Ponto <strong>Ilumeo</strong>
-                </h1>
+                <Typography as="h1" size={FontSize.LG} className={style.title}>
+                    Ponto{" "}
+                    <Typography as="span" weight={FontWeight.EXTRA_BOLD}>
+                        Ilumeo
+                    </Typography>
+                </Typography>
+
                 <TextField
                     labelText="Código do usuário"
                     value={form.registrationCode}
                     onChanged={(v) => onFormChanged("registrationCode", v)}
                 />
+
                 <Button>Confirmar</Button>
             </form>
         </main>

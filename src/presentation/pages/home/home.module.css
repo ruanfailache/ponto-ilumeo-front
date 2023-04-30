@@ -11,8 +11,9 @@
     display: flex;
     flex-direction: column;
     width: 365px;
-    height: 90%;
+    height: calc(100% - 2 * 85px);
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .header {
@@ -22,16 +23,9 @@
 }
 
 .headerUserName {
-    font-size: 0.8em;
-    font-weight: 300;
     color: var(--color-gray);
     margin-top: var(--grid-token-xxs);
     direction: rtl;
-}
-
-.typographyHeadlineSmall {
-    font-size: 0.8em;
-    font-weight: 700;
 }
 
 .form {
@@ -40,12 +34,6 @@
     gap: var(--grid-token-sm);
     margin-top: var(--grid-token-xs);
     margin-bottom: var(--grid-token-lg);
-}
-
-.hour {
-    display: block;
-    font-size: 1.5em;
-    font-weight: 700;
 }
 
 .cardList {
@@ -88,7 +76,6 @@
     .container {
         width: 100%;
         padding: var(--grid-token-md);
-        box-sizing: border-box;
     }
 }
 

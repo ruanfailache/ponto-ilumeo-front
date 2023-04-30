@@ -1,0 +1,43 @@
+.typography {
+    display: block;
+}
+
+.fontSizeLarge {
+    font-size: 1.5em;
+}
+
+.fontSizeMedium {
+    font-size: 1.25em;
+}
+
+.fontSizeSmall {
+    font-size: 1em;
+}
+
+.fontSizeSmaller {
+    font-size: 0.8em;
+}
+
+.extraBold {
+    font-weight: 800;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.semiBold {
+    font-weight: 600;
+}
+
+.medium {
+    font-weight: 500;
+}
+
+.regular {
+    font-weight: 400;
+}
+
+.light {
+    font-weight: 300;
+}
