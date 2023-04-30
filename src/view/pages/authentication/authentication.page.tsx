@@ -1,22 +1,27 @@
 import { FC } from "react";
 
+import { useAuthenticationPresenter } from "@/presentation/presenters";
+
 import {
     TextField,
     Button,
     Typography,
     FontSize,
     FontWeight,
-} from "../../components";
+} from "@/view/components";
 
 import style from "./authentication.module.css";
-import { useAuthenticationPresenter } from "./authentication.presenter";
 
 export const AuthenticationPage: FC = () => {
-    const { form, onFormChanged } = useAuthenticationPresenter();
+    const { state, controller } = useAuthenticationPresenter();
+
+    const { form } = state;
+
+    const { onFormChanged, onSubmit } = controller;
 
     return (
         <main className={style.page}>
-            <form className={style.container}>
+            <form className={style.container} onSubmit={onSubmit}>
                 <Typography as="h1" size={FontSize.LG} className={style.title}>
                     Ponto{" "}
                     <Typography as="span" weight={FontWeight.EXTRA_BOLD}>

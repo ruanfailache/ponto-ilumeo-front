@@ -1,12 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { AuthenticationPage, HomePage } from "./presentation/pages";
 
-import "./utils/styles/reset.css";
-import "./utils/styles/variables.css";
+import { RouterProvider } from "react-router-dom";
+import { appRouter } from "./config/router";
+
+import "./config/theme/styles/reset.css";
+import "./config/theme/styles/variables.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
-        <HomePage />
+        <RouterProvider router={appRouter} />
     </React.StrictMode>
 );
