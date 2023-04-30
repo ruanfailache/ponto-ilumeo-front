@@ -1,0 +1,102 @@
+.page {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    color: var(--color-white);
+    background-color: var(--color-background);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 365px;
+    height: 90%;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerUserName {
+    font-size: 0.8em;
+    font-weight: 300;
+    color: var(--color-gray);
+    margin-top: var(--grid-token-xxs);
+    direction: rtl;
+}
+
+.typographyHeadlineSmall {
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-token-sm);
+    margin-top: var(--grid-token-xs);
+    margin-bottom: var(--grid-token-lg);
+}
+
+.hour {
+    display: block;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.cardList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-token-xs);
+    margin-top: var(--grid-token-xs);
+    flex: 1;
+    overflow: auto;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--grid-token-xs);
+    border-radius: var(--border-radius);
+    background-color: var(--color-surface);
+}
+
+@media (min-width: 600px) {
+    .cardList::-webkit-scrollbar {
+        width: var(--grid-token-xxs);
+    }
+
+    .cardList::-webkit-scrollbar-track {
+        background: #70727480;
+    }
+
+    .cardList::-webkit-scrollbar-thumb {
+        background: #707274;
+    }
+
+    .cardList::-webkit-scrollbar-thumb:hover {
+        filter: brightness(120%);
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: var(--grid-token-md);
+        box-sizing: border-box;
+    }
+}
+
+@keyframes hideScrollBar {
+    from {
+        width: var(--grid-token-xxs);
+    }
+    to {
+        width: 0;
+    }
+}
