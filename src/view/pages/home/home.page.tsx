@@ -2,107 +2,103 @@ import { FC } from "react";
 import { Button, FontSize, FontWeight, Typography } from "../../components";
 
 import style from "./home.module.css";
+import { useHomePresenter } from "@/presentation/presenters";
+import { ToastContainer } from "react-toastify";
 
-interface HomePageComponent extends FC {
-    Header: FC;
-    Form: FC;
-    List: FC;
-}
+const formatDateTime = (date: Date) => {
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
 
-export const HomePage: HomePageComponent = () => {
+    const format = (value: number) => {
+        return `${value < 10 ? "0" : ""}${value}`;
+    };
+
+    const formattedYear = year.toString().slice(2);
+
+    return `${format(day)}/${format(month)}/${formattedYear}`;
+};
+
+export const HomePage: FC = () => {
+    const { state, presenter } = useHomePresenter();
+
     return (
         <div className={style.page}>
             <main className={style.container}>
-                <HomePage.Header />
-                <HomePage.Form />
-                <HomePage.List />
-            </main>
-        </div>
-    );
-};
+                <header className={style.header}>
+                    <Typography
+                        as="h1"
+                        size={FontSize.XS}
+                        weight={FontWeight.BOLD}
+                    >
+                        Relógio de ponto
+                    </Typography>
 
-HomePage.Header = () => {
-    return (
-        <header className={style.header}>
-            <Typography as="h1" size={FontSize.XS} weight={FontWeight.BOLD}>
-                Relógio de ponto
-            </Typography>
+                    <div>
+                        <Typography
+                            as="strong"
+                            size={FontSize.XS}
+                            weight={FontWeight.BOLD}
+                        >
+                            {state.user.registrationCode}
+                        </Typography>
 
-            <div>
-                <Typography
-                    as="strong"
-                    size={FontSize.XS}
-                    weight={FontWeight.BOLD}
-                >
-                    #45XXFMF
+                        <Typography
+                            size={FontSize.XS}
+                            weight={FontWeight.LIGHT}
+                            className={style.headerUserName}
+                        >
+                            {state.user.name}
+                        </Typography>
+                    </div>
+                </header>
+
+                <form className={style.form} onSubmit={presenter.onSubmit}>
+                    <div>
+                        <Typography
+                            as="strong"
+                            size={FontSize.LG}
+                            weight={FontWeight.BOLD}
+                        >
+                            {state.time.hours}h {state.time.minutes}m
+                        </Typography>
+
+                        <Typography
+                            as="span"
+                            size={FontSize.XS}
+                            weight={FontWeight.BOLD}
+                        >
+                            Horas de hoje
+                        </Typography>
+                    </div>
+
+                    <Button>Hora de entrada</Button>
+                </form>
+
+                <Typography as="h2" size={FontSize.XS} weight={FontWeight.BOLD}>
+                    Dias anteriores
                 </Typography>
 
-                <Typography
-                    size={FontSize.XS}
-                    weight={FontWeight.LIGHT}
-                    className={style.headerUserName}
-                >
-                    Usuário
-                </Typography>
-            </div>
-        </header>
-    );
-};
-
-HomePage.Form = () => {
-    return (
-        <form className={style.form}>
-            <div>
-                <Typography
-                    as="strong"
-                    size={FontSize.LG}
-                    weight={FontWeight.BOLD}
-                >
-                    0h 00m
-                </Typography>
-
-                <Typography
-                    as="span"
-                    size={FontSize.XS}
-                    weight={FontWeight.BOLD}
-                >
-                    Horas de hoje
-                </Typography>
-            </div>
-
-            <Button>Hora de entrada</Button>
-        </form>
-    );
-};
-
-HomePage.List = () => {
-    return (
-        <>
-            <Typography as="h2" size={FontSize.XS} weight={FontWeight.BOLD}>
-                Dias anteriores
-            </Typography>
-
-            <ul className={style.cardList}>
-                {Array(8)
-                    .fill("")
-                    .map(() => (
-                        <li className={style.card}>
+                <ul className={style.cardList}>
+                    {state.cards.map((card, index) => (
+                        <li key={index} className={style.card}>
                             <Typography
                                 size={FontSize.XS}
                                 weight={FontWeight.MEDIUM}
                             >
-                                30/04/23
+                                {formatDateTime(card.date)}
                             </Typography>
 
                             <Typography
                                 size={FontSize.XS}
                                 weight={FontWeight.BOLD}
                             >
-                                7h 30m
+                                {card.time.hours}h {card.time.minutes}m
                             </Typography>
                         </li>
                     ))}
-            </ul>
-        </>
+                </ul>
+            </main>
+        </div>
     );
 };

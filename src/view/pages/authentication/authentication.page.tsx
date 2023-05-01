@@ -8,20 +8,17 @@ import {
     Typography,
     FontSize,
     FontWeight,
+    Toast,
 } from "@/view/components";
 
 import style from "./authentication.module.css";
 
 export const AuthenticationPage: FC = () => {
-    const { state, controller } = useAuthenticationPresenter();
-
-    const { form } = state;
-
-    const { onFormChanged, onSubmit } = controller;
+    const { state, presenter } = useAuthenticationPresenter();
 
     return (
         <main className={style.page}>
-            <form className={style.container} onSubmit={onSubmit}>
+            <form className={style.container} onSubmit={presenter.onSubmit}>
                 <Typography as="h1" size={FontSize.LG} className={style.title}>
                     Ponto{" "}
                     <Typography as="span" weight={FontWeight.EXTRA_BOLD}>
@@ -31,11 +28,18 @@ export const AuthenticationPage: FC = () => {
 
                 <TextField
                     labelText="Código do usuário"
-                    value={form.registrationCode}
-                    onChanged={(v) => onFormChanged("registrationCode", v)}
+                    value={state.form.registrationCode}
+                    onChanged={(registrationCode) =>
+                        presenter.onFormChanged(
+                            "registrationCode",
+                            registrationCode
+                        )
+                    }
                 />
 
                 <Button>Confirmar</Button>
+
+                <Toast />
             </form>
         </main>
     );
