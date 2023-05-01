@@ -41,7 +41,7 @@ export class CardsRepositoryImpl extends CardsRepository {
     private initialDate = new Date(Date.now());
 
     async startTime() {
-        await Promise.resolve(() => setTimeout(() => 1, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
     }
 
     async getCurrentTime() {

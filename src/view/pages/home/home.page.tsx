@@ -72,7 +72,9 @@ export const HomePage: FC = () => {
                         </Typography>
                     </div>
 
-                    <Button>Hora de entrada</Button>
+                    <Button loading={state.isSubmissionInProgress}>
+                        Hora de entrada
+                    </Button>
                 </form>
 
                 <Typography as="h2" size={FontSize.XS} weight={FontWeight.BOLD}>

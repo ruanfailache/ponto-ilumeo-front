@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { AUTHENTICATION_ROUTE_PATH } from "@/config/router/routes";
 
 interface HomeState {
+    isSubmissionInProgress: boolean;
     time: TimeModel;
     user: UserModel;
     cards: CardModel[];
@@ -20,8 +21,10 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
 
     const navigate = useNavigate();
 
-    const [state, setState] = useState<HomeState>({
-        cards: [],
+    const [isSubmissionInProgress, setIsSubmissionInProgress] = useState(false);
+
+    const [data, setData] = useState({
+        cards: [] as CardModel[],
         user: {
             name: "",
             registrationCode: "",
@@ -40,7 +43,7 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
                     repository.cards.getPreviousCards(),
                     repository.user.getCurrentUser(),
                 ]);
-                setState({
+                setData({
                     user,
                     cards,
                     time: currentTime,
@@ -53,11 +56,18 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
     }, [navigate, repository]);
 
     return {
-        state: state,
+        state: {
+            ...data,
+            isSubmissionInProgress,
+        },
         presenter: {
-            onSubmit: (event) => {
+            onSubmit: async (event) => {
                 event.preventDefault();
-                repository.cards.startTime();
+                setIsSubmissionInProgress(true);
+                console.log("teste");
+
+                await repository.cards.startTime();
+                setIsSubmissionInProgress(false);
             },
         },
     };

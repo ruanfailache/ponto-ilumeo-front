@@ -1,10 +1,13 @@
 .button {
+    display: grid;
+    place-items: center;
     padding: var(--grid-token-xs);
     outline: 0;
     border: 0;
     border-radius: var(--border-radius);
     background-color: var(--color-primary);
     font-size: 1em;
+    line-height: 1;
     font-weight: 700;
     color: var(--color-background);
     cursor: pointer;
@@ -12,4 +15,36 @@
 
 .button:hover {
     filter: brightness(110%);
+}
+
+.button:disabled {
+    background-color: var(--color-gray);
+}
+
+.linearCircularProgressBar {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: relative;
+    background-color: transparent;
+}
+
+.linearCircularProgressBar:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 0.2em solid #707274;
+    border-top-color: #70727450;
+    border-left-color: #70727450;
+    animation: spin 2s linear infinite;
+    box-sizing: border-box;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
