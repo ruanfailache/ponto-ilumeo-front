@@ -73,7 +73,7 @@ export const HomePage: FC = () => {
                     </div>
 
                     <Button loading={state.isSubmissionInProgress}>
-                        Hora de entrada
+                        Hora de {state.time.isRunning ? "saída" : "entrada"}
                     </Button>
                 </form>
 

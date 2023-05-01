@@ -1,7 +1,7 @@
 import { CardModel, TimeModel } from "@/data";
 
 export abstract class CardsRepository {
-    abstract startTime(): Promise<void>;
+    abstract toogleChronometer(): Promise<TimeModel>;
 
     abstract getCurrentTime(): Promise<TimeModel>;
 

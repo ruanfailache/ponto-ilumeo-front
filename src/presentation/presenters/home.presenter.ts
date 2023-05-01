@@ -32,6 +32,7 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
         time: {
             hours: 0,
             minutes: 0,
+            isRunning: false,
         },
     });
 
@@ -64,9 +65,11 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
             onSubmit: async (event) => {
                 event.preventDefault();
                 setIsSubmissionInProgress(true);
-                console.log("teste");
-
-                await repository.cards.startTime();
+                const currentTime = await repository.cards.toogleChronometer();
+                setData((previousState) => ({
+                    ...previousState,
+                    time: currentTime,
+                }));
                 setIsSubmissionInProgress(false);
             },
         },

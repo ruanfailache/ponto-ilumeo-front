@@ -40,14 +40,19 @@ const cards = [
 export class CardsRepositoryImpl extends CardsRepository {
     private initialDate = new Date(Date.now());
 
-    async startTime() {
+    private isRunning = false;
+
+    async toogleChronometer() {
+        this.isRunning = !this.isRunning;
         await new Promise((resolve) => setTimeout(resolve, 3000));
+        return this.getCurrentTime();
     }
 
     async getCurrentTime() {
         const currentDate = new Date(Date.now());
 
         return {
+            isRunning: this.isRunning,
             hours: currentDate.getHours() - this.initialDate.getHours(),
             minutes: currentDate.getMinutes() - this.initialDate.getMinutes(),
         };
