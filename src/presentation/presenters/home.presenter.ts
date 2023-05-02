@@ -7,7 +7,7 @@ import { AUTHENTICATION_ROUTE_PATH } from "@/config/router/routes";
 
 interface HomeState {
     isSubmissionInProgress: boolean;
-    time: TimeModel;
+    totalTime: TimeModel;
     user: UserModel;
     cards: CardModel[];
 }
@@ -29,7 +29,7 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
             name: "",
             registrationCode: "",
         },
-        time: {
+        totalTime: {
             isFinished: true,
             hours: 0,
             minutes: 0,
@@ -39,12 +39,12 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const [time, cards, user] = await Promise.all([
+                const [totalTime, cards, user] = await Promise.all([
                     repository.cards.getCurrentTime(),
                     repository.cards.getPreviousCards(),
                     repository.user.getCurrentUser(),
                 ]);
-                setData({ user, cards, time });
+                setData({ user, cards, totalTime });
             } catch (err) {
                 navigate(AUTHENTICATION_ROUTE_PATH);
             }

@@ -4,20 +4,6 @@ import { Button, FontSize, FontWeight, Typography } from "../../components";
 import style from "./home.module.css";
 import { useHomePresenter } from "@/presentation/presenters";
 
-const formatDateTime = (date: Date) => {
-    const day = date.getDate();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-
-    const format = (value: number) => {
-        return `${value < 10 ? "0" : ""}${value}`;
-    };
-
-    const formattedYear = year.toString().slice(2);
-
-    return `${format(day)}/${format(month)}/${formattedYear}`;
-};
-
 export const HomePage: FC = () => {
     const { state, presenter } = useHomePresenter();
 
@@ -59,7 +45,7 @@ export const HomePage: FC = () => {
                             size={FontSize.LG}
                             weight={FontWeight.BOLD}
                         >
-                            {state.time.hours}h {state.time.minutes}m
+                            {state.totalTime.hours}h {state.totalTime.minutes}m
                         </Typography>
 
                         <Typography
@@ -72,7 +58,8 @@ export const HomePage: FC = () => {
                     </div>
 
                     <Button loading={state.isSubmissionInProgress}>
-                        Hora de {state.time.isFinished ? "entrada" : "saída"}
+                        Hora de{" "}
+                        {state.totalTime.isFinished ? "entrada" : "saída"}
                     </Button>
                 </form>
 
@@ -87,14 +74,15 @@ export const HomePage: FC = () => {
                                 size={FontSize.XS}
                                 weight={FontWeight.MEDIUM}
                             >
-                                {formatDateTime(card.date)}
+                                {card.date.toLocaleDateString()}
                             </Typography>
 
                             <Typography
                                 size={FontSize.XS}
                                 weight={FontWeight.BOLD}
                             >
-                                {card.time.hours}h {card.time.minutes}m
+                                {card.totalTime.hours}h {card.totalTime.minutes}
+                                m
                             </Typography>
                         </li>
                     ))}

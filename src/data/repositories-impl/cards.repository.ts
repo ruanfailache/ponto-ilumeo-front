@@ -44,6 +44,13 @@ export class CardsRepositoryImpl
             url: "/cards/previous",
         });
 
-        return data;
+        return data.map((card: CardModel) => {
+            const date2Str = card.date.toString();
+            const parsedDateStr = Date.parse(date2Str);
+            return {
+                ...card,
+                date: new Date(parsedDateStr),
+            };
+        });
     }
 }
