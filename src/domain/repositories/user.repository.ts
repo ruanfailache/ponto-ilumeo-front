@@ -1,7 +1,7 @@
 import { UserModel } from "@/data";
 
-export abstract class UserRepository {
-    abstract getCurrentUser(): Promise<UserModel>;
+export interface UserRepository {
+    getCurrentUser(): Promise<UserModel>;
 
-    abstract validateRegistrationCode(registrationCode: string): Promise<void>;
+    validateRegistrationCode(registrationCode: string): Promise<void>;
 }

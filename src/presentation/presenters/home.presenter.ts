@@ -30,30 +30,32 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
             registrationCode: "",
         },
         time: {
+            isFinished: true,
             hours: 0,
             minutes: 0,
-            isRunning: false,
         },
     });
 
     useEffect(() => {
         const loadData = async () => {
             try {
-                const [currentTime, cards, user] = await Promise.all([
+                const [time, cards, user] = await Promise.all([
                     repository.cards.getCurrentTime(),
                     repository.cards.getPreviousCards(),
                     repository.user.getCurrentUser(),
                 ]);
-                setData({
-                    user,
-                    cards,
-                    time: currentTime,
-                });
+                setData({ user, cards, time });
             } catch (err) {
                 navigate(AUTHENTICATION_ROUTE_PATH);
             }
         };
         loadData();
+        // TODO:  implements a web socket here instead of a time out
+        const id = setInterval(loadData, 1000 * 60);
+
+        return () => {
+            clearInterval(id);
+        };
     }, [navigate, repository]);
 
     return {
@@ -65,7 +67,7 @@ export const useHomePresenter: PresenterHook<HomeState, HomePresenter> = () => {
             onSubmit: async (event) => {
                 event.preventDefault();
                 setIsSubmissionInProgress(true);
-                const currentTime = await repository.cards.toogleChronometer();
+                const currentTime = await repository.cards.toogle();
                 setData((previousState) => ({
                     ...previousState,
                     time: currentTime,

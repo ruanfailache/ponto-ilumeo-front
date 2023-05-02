@@ -1,41 +1,43 @@
 import { UserModel } from "@/data";
 import { UserRepository } from "@/domain";
+import { RemoteRepository } from "../helpers/remote-repository";
 
-const users: UserModel[] = [
-    {
-        name: "Ruan",
-        registrationCode: "#45XXFMF",
-    },
-    {
-        name: "Eliane",
-        registrationCode: "#52FEFO9",
-    },
-    {
-        name: "Subaru",
-        registrationCode: "#R32GHL7",
-    },
-];
-
-export class UserRepositoryImpl extends UserRepository {
-    private user?: UserModel;
-
+export class UserRepositoryImpl
+    extends RemoteRepository
+    implements UserRepository
+{
     async getCurrentUser() {
-        if (!this.user) {
-            throw "User not found";
+        const { status, data } = await this.request({
+            method: "get",
+            url: "/user",
+        });
+
+        if (status >= 500) {
+            throw "Unknown error";
         }
 
-        return this.user;
+        if (status >= 400) {
+            throw "User is not authenticated";
+        }
+
+        return data as UserModel;
     }
 
     async validateRegistrationCode(registrationCode: string) {
-        const user = users.find(
-            (user) => user.registrationCode === registrationCode
-        );
+        const { status, data } = await this.request({
+            method: "post",
+            url: "/auth",
+            data: { registrationCode },
+        });
 
-        if (!user) {
+        if (status >= 500) {
+            throw "Unknown error";
+        }
+
+        if (status >= 400) {
             throw "Invalid registration code";
         }
 
-        this.user = user;
+        this.updateToken(data.accessToken);
     }
 }

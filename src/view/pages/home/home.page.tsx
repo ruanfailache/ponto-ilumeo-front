@@ -3,7 +3,6 @@ import { Button, FontSize, FontWeight, Typography } from "../../components";
 
 import style from "./home.module.css";
 import { useHomePresenter } from "@/presentation/presenters";
-import { ToastContainer } from "react-toastify";
 
 const formatDateTime = (date: Date) => {
     const day = date.getDate();
@@ -73,7 +72,7 @@ export const HomePage: FC = () => {
                     </div>
 
                     <Button loading={state.isSubmissionInProgress}>
-                        Hora de {state.time.isRunning ? "saída" : "entrada"}
+                        Hora de {state.time.isFinished ? "entrada" : "saída"}
                     </Button>
                 </form>
 

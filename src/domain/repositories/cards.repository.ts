@@ -1,9 +1,9 @@
 import { CardModel, TimeModel } from "@/data";
 
-export abstract class CardsRepository {
-    abstract toogleChronometer(): Promise<TimeModel>;
+export interface CardsRepository {
+    toogle(): Promise<TimeModel>;
 
-    abstract getCurrentTime(): Promise<TimeModel>;
+    getCurrentTime(): Promise<TimeModel>;
 
-    abstract getPreviousCards(): Promise<CardModel[]>;
+    getPreviousCards(): Promise<CardModel[]>;
 }

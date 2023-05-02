@@ -1,64 +1,49 @@
 import { CardsRepository } from "@/domain";
+import { CardModel } from "..";
+import { RemoteRepository } from "../helpers/remote-repository";
 
-const MILLISECOND = 1;
-const SECOND = 1000 * MILLISECOND;
-const MINUTE = 60 * SECOND;
-const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
-
-const cards = [
-    {
-        date: new Date(Date.now() - 4 * DAY),
-        time: {
-            hours: 7,
-            minutes: 30,
-        },
-    },
-    {
-        date: new Date(Date.now() - 3 * DAY),
-        time: {
-            hours: 9,
-            minutes: 10,
-        },
-    },
-    {
-        date: new Date(Date.now() - 2 * DAY),
-        time: {
-            hours: 8,
-            minutes: 20,
-        },
-    },
-    {
-        date: new Date(Date.now() - DAY),
-        time: {
-            hours: 8,
-            minutes: 20,
-        },
-    },
-];
-
-export class CardsRepositoryImpl extends CardsRepository {
+export class CardsRepositoryImpl
+    extends RemoteRepository
+    implements CardsRepository
+{
     private initialDate = new Date(Date.now());
 
-    private isRunning = false;
+    private isFinished = false;
 
-    async toogleChronometer() {
-        this.isRunning = !this.isRunning;
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+    async toogle() {
+        await this.request({
+            method: "patch",
+            url: this.isFinished ? "/cards/create" : "/cards/finish",
+        });
+
         return this.getCurrentTime();
     }
 
     async getCurrentTime() {
         const currentDate = new Date(Date.now());
 
+        const { data } = await this.request({
+            method: "get",
+            url: "/cards/today",
+        });
+
+        const card = data as CardModel;
+
+        this.isFinished = card.isFinished;
+
         return {
-            isRunning: this.isRunning,
+            isFinished: this.isFinished,
             hours: currentDate.getHours() - this.initialDate.getHours(),
             minutes: currentDate.getMinutes() - this.initialDate.getMinutes(),
         };
     }
 
     async getPreviousCards() {
-        return cards;
+        const { data } = await this.request({
+            method: "get",
+            url: "/cards/previous",
+        });
+
+        return data;
     }
 }
